@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "택시 놀이",
+    "slug": "taxi-meter",
+    "version": "0.1.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.wongil.taximeter" },
+    "android": { "package": "com.wongil.taximeter" },
+    "plugins": [["expo-location", {"locationWhenInUsePermission": "이동 거리를 측정해 오락용 가상 요금을 계산합니다."}]]
+  }
+}

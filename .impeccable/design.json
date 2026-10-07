@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T00:00:00+09:00",
+  "title": "Design System: 택시 놀이 — 임시 기본 화면",
+  "extensions": {
+    "typographyMeta": {
+      "fare": {
+        "displayName": "가상 요금",
+        "purpose": "금액 중심 표시. 원본은 tabular-nums를 사용한다."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "button-primary-light",
+      "kind": "button",
+      "refersTo": "button-primary-light",
+      "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
+      "html": "<button class=\"ds-button-primary-light\">주행 시작</button>",
+      "css": ".ds-button-primary-light {background:#344E25;color:#FFFFFF;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-light:active {opacity:.7;} .ds-button-primary-light:disabled {opacity:.5;}"
+    },
+    {
+      "name": "button-secondary-light",
+      "kind": "button",
+      "refersTo": "button-secondary-light",
+      "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
+      "html": "<button class=\"ds-button-secondary-light\">주행 시작</button>",
+      "css": ".ds-button-secondary-light {background:transparent;color:#192119;border:1px solid #CDD4C7;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-light:active {opacity:.7;} .ds-button-secondary-light:disabled {opacity:.5;}"
+    },
+    {
+      "name": "button-primary-dark",
+      "kind": "button",
+      "refersTo": "button-primary-dark",
+      "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
+      "html": "<button class=\"ds-button-primary-dark\">주행 시작</button>",
+      "css": ".ds-button-primary-dark {background:#E4F28B;color:#19210D;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-dark:active {opacity:.7;} .ds-button-primary-dark:disabled {opacity:.5;}"
+    },
+    {
+      "name": "button-secondary-dark",
+      "kind": "button",
+      "refersTo": "button-secondary-dark",
+      "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
+      "html": "<button class=\"ds-button-secondary-dark\">주행 시작</button>",
+      "css": ".ds-button-secondary-dark {background:transparent;color:#F5F5E9;border:1px solid #384238;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-dark:active {opacity:.7;} .ds-button-secondary-dark:disabled {opacity:.5;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "미확정 — 사용자 시각 디자인 선택 대기",
+    "overview": "이 문서는 2026-10-07 현재 App.tsx에 구현된 임시 기본 화면을 기록한다. 사용자의 시각 디자인 방향은 미확정이며 시각 검증 완료를 의미하지 않는다.",
+    "keyCharacteristics": [
+      "기기 라이트/다크 테마",
+      "가상 요금 중심의 세로 화면",
+      "그림자 없는 기본 화면"
+    ],
+    "rules": [],
+    "dos": [
+      "현재 구현을 확장할 때 각 테마의 글자색과 배경색 조합을 함께 사용한다.",
+      "가상 요금과 실제 택시 요금이 다르다는 안내를 읽을 수 있게 유지한다."
+    ],
+    "donts": [
+      "이 임시 토큰을 사용자 승인된 브랜드 지침으로 취급하지 않는다.",
+      "현재 기록만으로 접근성, 큰 글자, 실기기 시각 검증이 완료되었다고 주장하지 않는다."
+    ]
+  }
+}
