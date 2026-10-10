@@ -34,15 +34,16 @@ test('base distance and completed distance units are charged exactly at boundari
   assert.equal(state.lowSpeedSeconds, 0);
 });
 
-test('low speed includes threshold, bills time only and resumes distance accounting', () => {
+test('low speed includes threshold and adds time while distance continues across mixed speeds', () => {
   let state = tick(start(), 160, 1600);
   state = tick(state, 30, 125, 15);
   assert.equal(state.fare, 4900);
-  assert.equal(state.chargeableDistanceMeters, 0);
+  assert.equal(state.chargeableDistanceMeters, 125);
   state = tick(state, 30, 0);
   assert.equal(state.fare, 5000);
   state = tick(state, 13.1, 131);
   assert.equal(state.fare, 5100);
+  assert.equal(state.chargeableDistanceMeters, 256);
   assert.equal(state.lowSpeedSeconds, 60);
   assert.equal(state.totalDistanceMeters, 1856);
 });
@@ -53,8 +54,36 @@ test('base boundary crossing prorates time and excludes waiting inside base dist
   state = tick(state, 150, 1500);
   state = tick(state, 60, 200, 12);
   assert.equal(state.lowSpeedSeconds, 30);
-  assert.equal(state.chargeableDistanceMeters, 0);
+  assert.equal(state.chargeableDistanceMeters, 100);
   assert.equal(state.fare, 4900);
+});
+
+test('one low-speed interval can complete both a distance unit and a time unit', () => {
+  let state = tick(start(), 160, 1600);
+  state = tick(state, 90, 262);
+  assert.equal(state.chargeableDistanceMeters, 262);
+  assert.equal(state.lowSpeedSeconds, 90);
+  assert.equal(state.fare, 5300);
+});
+
+test('distance and low-speed time each wait for their own complete billing unit', () => {
+  let state = tick(start(), 160, 1600);
+  state = tick(state, 29, 120, 15);
+  assert.equal(state.fare, 4800);
+  state = tick(state, 1, 0);
+  assert.equal(state.fare, 4900);
+  state = tick(state, 3, 11);
+  assert.equal(state.fare, 5000);
+  assert.equal(state.chargeableDistanceMeters, 131);
+  assert.equal(state.lowSpeedSeconds, 33);
+});
+
+test('crossing the base boundary adds only excess distance and proportional low-speed time', () => {
+  let state = tick(start(), 150, 1500);
+  state = tick(state, 92.4, 231);
+  assert.equal(state.chargeableDistanceMeters, 131);
+  assert.ok(Math.abs(state.lowSpeedSeconds - 52.4) < 1e-9);
+  assert.equal(state.fare, 5000);
 });
 
 test('equivalent uniform intervals produce equivalent fares', () => {
@@ -62,6 +91,10 @@ test('equivalent uniform intervals produce equivalent fares', () => {
   for (let index = 0; index < 100; index += 1) split = tick(split, 10, 100);
   const whole = tick(start(), 1000, 10000);
   assert.deepEqual(split, whole);
+  let slowSplit = start();
+  for (let index = 0; index < 20; index += 1) slowSplit = tick(slowSplit, 100, 250);
+  const slowWhole = tick(start(), 2000, 5000);
+  assert.deepEqual(slowSplit, slowWhole);
   let fractional = tick(start(), 160, 1600);
   for (let index = 0; index < 300; index += 1) fractional = tick(fractional, 0.1, 0);
   assert.equal(fractional.fare, 4900);
@@ -83,11 +116,40 @@ test('invalid data is rejected and prior state is never mutated', () => {
   assert.deepEqual(state, snapshot);
 });
 
-test('custom game rules survive reset and displays handle long trips', () => {
+test('custom billing rules survive reset and displays handle long trips', () => {
   let state = meterReducer(createMeterState({ baseFare: 1000, baseDistanceMeters: 0 }), { type: 'start' });
   state = tick(state, 30, 0);
   assert.equal(state.fare, 1100);
   assert.equal(meterReducer(state, { type: 'reset' }).config.baseFare, 1000);
   assert.equal(formatFare(4800), '4,800');
   assert.equal(formatDuration(3661.9), '01:01:01');
+});
+
+test('unknown GPS speed never incurs low-speed time charges', () => {
+  const state = tick(start(), 160, 1600);
+  const uncertain = meterReducer(state, { type: 'tick', elapsedSeconds: 60,
+    distanceMeters: 131, speedKnown: false });
+  assert.equal(uncertain.lowSpeedSeconds, 0);
+  assert.equal(uncertain.fare, 4900);
+  const stationary = meterReducer(uncertain, { type: 'tick', elapsedSeconds: 30,
+    distanceMeters: 0, speedKmh: 0, speedKnown: true });
+  assert.equal(stationary.fare, 5000);
+});
+
+test('explicit log mode records movement without fare or billing counters', () => {
+  let state = meterReducer(createMeterState({}, 'log'), { type: 'start', mode: 'log' });
+  state = tick(state, 2000, 5000, 9);
+  assert.equal(state.mode, 'log');
+  assert.equal(state.totalDistanceMeters, 5000);
+  assert.equal(state.fare, 0);
+  assert.equal(state.chargeableDistanceMeters, 0);
+  assert.equal(state.lowSpeedSeconds, 0);
+  state = meterReducer(state, { type: 'pause' });
+  state = meterReducer(state, { type: 'resume' });
+  assert.equal(state.mode, 'log');
+  const ready = meterReducer(state, { type: 'reset', mode: 'log' });
+  const taxi = meterReducer(ready, { type: 'start', mode: 'taxi' });
+  assert.equal(taxi.mode, 'taxi');
+  assert.equal(taxi.fare, 4800);
+  assert.equal(meterReducer(taxi, { type: 'start', mode: 'log' }), taxi);
 });

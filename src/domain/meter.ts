@@ -1,4 +1,4 @@
-/** Illustrative game rules only; these are not an official taxi tariff. */
+/** App billing configuration; not a claim of an official regional taxi tariff. */
 export interface MeterConfig {
   baseFare: number;
   baseDistanceMeters: number;
@@ -20,14 +20,16 @@ export const DEFAULT_METER_CONFIG: Readonly<MeterConfig> = Object.freeze({
 });
 
 export type MeterStatus = 'idle' | 'running' | 'paused' | 'finished';
+export type TripMode = 'log' | 'taxi';
 
 export interface MeterState {
+  mode: TripMode;
   status: MeterStatus;
   config: Readonly<MeterConfig>;
   /** Active trip time, excluding pauses. */
   elapsedSeconds: number;
   totalDistanceMeters: number;
-  /** Only distance traveled above the threshold after the base distance. */
+  /** All distance traveled after the base distance, including low-speed travel. */
   chargeableDistanceMeters: number;
   /** Only time at or below the threshold after the base distance. */
   lowSpeedSeconds: number;
@@ -35,17 +37,19 @@ export interface MeterState {
 }
 
 export type MeterAction =
-  | { type: 'start' }
+  | { type: 'start'; mode?: TripMode }
   | { type: 'pause' }
   | { type: 'resume' }
   | { type: 'finish' }
-  | { type: 'reset' }
+  | { type: 'reset'; mode?: TripMode }
   | {
       type: 'tick';
       elapsedSeconds: number;
       distanceMeters: number;
       /** Omit to infer average speed from this tick's distance and duration. */
       speedKmh?: number;
+      /** False when GPS cannot distinguish slow movement from position noise. */
+      speedKnown?: boolean;
     };
 
 function nonNegative(value: number, name: string): void {
@@ -54,13 +58,14 @@ function nonNegative(value: number, name: string): void {
   }
 }
 
-export function createMeterState(config: Partial<MeterConfig> = {}): MeterState {
+export function createMeterState(config: Partial<MeterConfig> = {}, mode: TripMode = 'taxi'): MeterState {
   const resolved = { ...DEFAULT_METER_CONFIG, ...config };
   for (const [key, value] of Object.entries(resolved)) nonNegative(value, key);
   if (resolved.distanceUnitMeters === 0 || resolved.timeUnitSeconds === 0) {
     throw new RangeError('Billing units must be greater than zero');
   }
   return {
+    mode,
     status: 'idle',
     config: Object.freeze(resolved),
     elapsedSeconds: 0,
@@ -73,7 +78,7 @@ export function createMeterState(config: Partial<MeterConfig> = {}): MeterState 
 
 /** A full billing unit must accrue before it is charged. */
 export function calculateFare(state: MeterState): number {
-  if (state.status === 'idle') return 0;
+  if (state.status === 'idle' || state.mode === 'log') return 0;
   const { config } = state;
   return (
     config.baseFare +
@@ -87,7 +92,8 @@ export function calculateFare(state: MeterState): number {
 /**
  * Pure state machine. Invalid lifecycle transitions are harmless no-ops.
  * Each tick represents one uniform-speed interval. Split a sample if its speed
- * crosses the threshold. Distance and time are NEVER charged for the same tick.
+ * crosses the threshold. All distance beyond the base distance is charged;
+ * time at or below the low-speed threshold is charged in addition to distance.
  * The initial base distance includes all travel; time is free until it is used.
  * A tick crossing that boundary bills only its proportional remaining duration.
  */
@@ -95,7 +101,8 @@ export function meterReducer(state: MeterState, action: MeterAction): MeterState
   switch (action.type) {
     case 'start':
       return state.status === 'idle'
-        ? { ...state, status: 'running', fare: state.config.baseFare }
+        ? { ...state, mode: action.mode ?? state.mode, status: 'running',
+          fare: (action.mode ?? state.mode) === 'log' ? 0 : state.config.baseFare }
         : state;
     case 'pause':
       return state.status === 'running' ? { ...state, status: 'paused' } : state;
@@ -106,7 +113,7 @@ export function meterReducer(state: MeterState, action: MeterAction): MeterState
         ? { ...state, status: 'finished' }
         : state;
     case 'reset':
-      return createMeterState(state.config);
+      return createMeterState(state.config, action.mode ?? state.mode);
     case 'tick': {
       nonNegative(action.elapsedSeconds, 'elapsedSeconds');
       nonNegative(action.distanceMeters, 'distanceMeters');
@@ -122,13 +129,13 @@ export function meterReducer(state: MeterState, action: MeterAction): MeterState
       const chargeableFraction = remainingBase === 0
         ? 1
         : action.distanceMeters > 0 ? extraDistance / action.distanceMeters : 0;
-      const lowSpeed = speed <= state.config.lowSpeedThresholdKmh;
+      const lowSpeed = action.speedKnown !== false && speed <= state.config.lowSpeedThresholdKmh;
       const next: MeterState = {
         ...state,
         elapsedSeconds: state.elapsedSeconds + action.elapsedSeconds,
         totalDistanceMeters: state.totalDistanceMeters + action.distanceMeters,
-        chargeableDistanceMeters: state.chargeableDistanceMeters + (lowSpeed ? 0 : extraDistance),
-        lowSpeedSeconds: state.lowSpeedSeconds + (lowSpeed ? action.elapsedSeconds * chargeableFraction : 0),
+        chargeableDistanceMeters: state.chargeableDistanceMeters + (state.mode === 'taxi' ? extraDistance : 0),
+        lowSpeedSeconds: state.lowSpeedSeconds + (state.mode === 'taxi' && lowSpeed ? action.elapsedSeconds * chargeableFraction : 0),
       };
       next.fare = calculateFare(next);
       return next;
