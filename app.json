@@ -1,12 +1,41 @@
 {
   "expo": {
-    "name": "택시 놀이",
+    "name": "택시 미터",
     "slug": "taxi-meter",
     "version": "0.1.0",
     "orientation": "default",
     "userInterfaceStyle": "automatic",
-    "ios": { "supportsTablet": false, "bundleIdentifier": "com.wongil.taximeter" },
-    "android": { "package": "com.wongil.taximeter" },
-    "plugins": [["expo-location", {"locationWhenInUsePermission": "이동 거리를 측정해 오락용 가상 요금을 계산합니다."}]]
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.wongil.taximeter",
+      "buildNumber": "3",
+      "appleTeamId": "Y6963W3U5A",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.wongil.taximeter"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "택시 미터에서 이동 거리를 측정하고 요금을 계산하기 위해 위치를 사용합니다."
+        }
+      ],
+      "expo-sharing",
+      [
+        "expo-widgets",
+        {
+          "bundleIdentifier": "com.wongil.taximeter.widgets",
+          "groupIdentifier": "group.com.wongil.taximeter",
+          "widgets": []
+        }
+      ],
+      "./plugins/withTaxiCarPlay"
+    ],
+    "scheme": "taximeter",
+    "icon": "./assets/taxi-icon.png"
   }
 }

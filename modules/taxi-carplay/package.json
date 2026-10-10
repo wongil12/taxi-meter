@@ -1,0 +1,8 @@
+{
+  "name": "taxi-carplay",
+  "version": "0.1.0",
+  "description": "Native taxi meter runtime and CarPlay scene for Taxi Meter",
+  "main": "index.ts",
+  "private": true,
+  "license": "UNLICENSED"
+}
