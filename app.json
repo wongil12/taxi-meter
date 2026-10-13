@@ -8,7 +8,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.wongil.taximeter",
-      "buildNumber": "3",
+      "buildNumber": "4",
       "appleTeamId": "Y6963W3U5A",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -21,7 +21,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "택시 미터에서 이동 거리를 측정하고 요금을 계산하기 위해 위치를 사용합니다."
+          "locationWhenInUsePermission": "운행 기록을 위해 이동 거리와 시간을 측정합니다. 미터기에서는 거리와 저속 시간으로 요금을 계산합니다."
         }
       ],
       "expo-sharing",

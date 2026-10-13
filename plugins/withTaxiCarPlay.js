@@ -8,8 +8,8 @@ const PHONE_DELEGATE = 'EXExpoAppSceneDelegate';
 function configureInfoPlist(input, enabled) {
   const plist = structuredClone(input);
   plist.NSLocationWhenInUseUsageDescription = enabled
-    ? '택시 미터에서 이동 거리와 저속 시간을 측정하여 요금을 계산합니다. CarPlay 연결 중 주행을 시작하면 휴대폰 화면이 꺼져도 측정을 계속합니다.'
-    : '택시 미터에서 이동 거리와 저속 시간을 측정하여 요금을 계산하기 위해 위치를 사용합니다.';
+    ? '운행 기록을 위해 이동 거리와 시간을 측정합니다. CarPlay 연결 중 주행할 때는 휴대폰 화면이 꺼져도 측정을 계속합니다.'
+    : '운행 기록을 위해 이동 거리와 시간을 측정합니다. 미터기에서는 거리와 저속 시간으로 요금을 계산합니다.';
   if (!enabled) {
     // Undo only this plugin's previous scene setup when changing the opt-in flag.
     if (plist.TaxiCarPlayConfiguration) {

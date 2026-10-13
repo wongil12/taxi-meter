@@ -64,3 +64,13 @@
 - iOS 완료 기록은 native pending outbox만 자동 저장. 이미 확인된 completedTrip을 재시작 때 중복 저장하지 않는다. 삭제 전 native retry copy도 확인 처리하여 재수입 방지.
 - TypeScript 검사와 테스트 69개 통과. iPhone 17 Pro 시뮬레이터에서 완료 상태→미터기, 홈/기록/설정 선택 표시, 기록 필터→상세→뒤로가기 확인.
 - 이 회차의 실제 차량·Android UI·큰 글자/가로 화면 검증은 수행하지 않았다. TestFlight 미배포.
+
+## 2026-10-14 TestFlight 빌드 4 준비 — 로그인 대기
+
+- 누적 변경을 기능별 4개 커밋으로 분리하고 `origin/master`에 푸시 완료.
+- `app.json`과 생성된 앱·위젯의 빌드 번호를 4로 일치시킴.
+- CarPlay 설정을 활성화한 Release 무서명 아카이브 생성 성공: `/private/tmp/taxi-meter-build4-unsigned.xcarchive`.
+- TypeScript 검사, JS 테스트 69개, 설정 테스트 4개, Swift 회귀 검사 67개 통과.
+- 기존 `Taxi Meter App Store` 프로파일에 Driving Task entitlement가 없는 것을 확인. Apple Developer 웹 로그인 세션 만료로 앱 ID 권한 활성화 및 프로파일 재발급 대기 중.
+- 새 빌드는 아직 서명·업로드하지 않았다. App Store Connect에서 확인된 기존 빌드는 1뿐이다.
+- 지원·개인정보 HTML은 신규 동작에 맞춰 로컬 문서를 갱신했다. 공개 정책 사이트에는 아직 반영하지 않았다.
