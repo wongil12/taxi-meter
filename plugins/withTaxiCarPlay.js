@@ -1,4 +1,4 @@
-const { withInfoPlist, withEntitlementsPlist, withAppDelegate } = require('expo/config-plugins');
+const { withInfoPlist, withEntitlementsPlist, withAppDelegate, withXcodeProject } = require('expo/config-plugins');
 
 const CARPLAY_ROLE = 'CPTemplateApplicationSceneSessionRoleApplication';
 const PHONE_ROLE = 'UIWindowSceneSessionRoleApplication';
@@ -109,6 +109,22 @@ function withTaxiCarPlay(config) {
       return mod;
     });
   }
+  // Existing widget targets retain CURRENT_PROJECT_VERSION across prebuilds.
+  // Xcode uses it when generating the extension's final Info.plist.
+  config = withXcodeProject(config, mod => {
+    const appID = mod.ios?.bundleIdentifier;
+    const buildNumber = mod.ios?.buildNumber;
+    if (appID && buildNumber) {
+      for (const entry of Object.values(mod.modResults.pbxXCBuildConfigurationSection())) {
+        const settings = entry?.buildSettings;
+        const bundleID = String(settings?.PRODUCT_BUNDLE_IDENTIFIER || '').replace(/"/g, '');
+        if (bundleID === appID || bundleID === `${appID}.widgets`) {
+          settings.CURRENT_PROJECT_VERSION = buildNumber;
+        }
+      }
+    }
+    return mod;
+  });
   return config;
 }
 
