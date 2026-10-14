@@ -104,3 +104,13 @@
 - 서명된 Archive `/private/tmp/drive-log-build6.xcarchive` 생성 성공. 앱/위젯 0.1.0 (6), 운행노트 표시 이름, 암호화 면제 설정 및 실제 CarPlay entitlement=true 확인.
 - Mac 잠금으로 Xcode Organizer 최종 업로드를 진행하지 못했다. 빌드 6은 아직 TestFlight에 올라가지 않았다. 잠금 해제 후 업로드 및 내부 테스트 그룹 연결 필요.
 - 실제 iPhone / iOS 27 및 차량 CarPlay 실행은 새 빌드 설치 후 확인해야 한다.
+
+### 빌드 6 업로드 완료
+
+- Mac 잠금 해제 후 Xcode Organizer에서 2026-10-14 22:24 KST 업로드 성공.
+- App Store Connect 빌드 ID `3ff4a5ef-b378-4fb2-b9b7-ccdeb6f6da4b`, 처리 중 확인.
+- Hermes 프레임워크 dSYM 누락 경고 1건. 업로드 자체는 성공했으며 Hermes 내부 충돌의 심볼 해석에 제한이 있을 수 있다.
+- IPA와 업로드 로그는 `/Users/kim-wongil/Documents/iOS/taxi-meter/releases/0.1.0-6/`에 보관했다.
+- Apple 처리 완료 후 빌드 6 ‘제출 준비 완료’ 확인. 암호화 문서 누락 없음.
+- 기존 내부 테스트 그룹(테스터 1명)에 빌드 6 연결 완료. 시작·재실행·기존 기록·CarPlay 확인 항목을 테스트 안내에 등록했다.
+- App Review 제출은 진행하지 않았다.
