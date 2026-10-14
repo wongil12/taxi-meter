@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "택시 미터",
+    "name": "운행노트",
     "slug": "taxi-meter",
     "version": "0.1.0",
     "orientation": "default",
@@ -8,7 +8,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.wongil.taximeter",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "appleTeamId": "Y6963W3U5A",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -36,6 +36,6 @@
       "./plugins/withTaxiCarPlay"
     ],
     "scheme": "taximeter",
-    "icon": "./assets/taxi-icon.png"
+    "icon": "./assets/drive-log-icon.png"
   }
 }

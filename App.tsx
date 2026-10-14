@@ -128,7 +128,7 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
         <StatusBar style="auto" />
-        <NavigationHeader title={screen === 'settings' ? '설정' : screen === 'history' ? '주행 기록' : screen === 'receipt' ? (selectedTrip?.mode === 'log' ? '운행 상세' : '영수증') : screen === 'drive' ? (isLog ? '운행 기록' : '택시 미터기') : '차량 운행 기록'}
+        <NavigationHeader title={screen === 'settings' ? '설정' : screen === 'history' ? '주행 기록' : screen === 'receipt' ? (selectedTrip?.mode === 'log' ? '운행 상세' : '영수증') : screen === 'drive' ? (isLog ? '운행 기록' : '택시 미터기') : '운행노트'}
           backLabel={receiptOrigin === 'history' ? '주행 기록' : receiptOrigin === 'home' ? '운행' : '주행 완료'}
           onBack={screen === 'receipt' ? () => setScreen(receiptOrigin) : undefined}
           disabled={sharingReceipt} theme={theme} />
