@@ -94,3 +94,13 @@
 - 새 이름·아이콘, 운행 기록, CarPlay 실차 확인 항목을 TestFlight 테스트 안내에 저장.
 - 앱 저장소 변경 커밋: `0b8ad30` (이름·아이콘·설명).
 - 사용자 지정 `app-policy` 폴더에 정책/지원/앱 안내와 목록 링크를 커밋(`36457e1`)했으며 공개 게시 승인은 대기 중. 기존 사용자 `.DS_Store` 변경은 보존하고 커밋에서 제외.
+
+## 2026-10-14 빌드 6 — 시작 충돌 수정, 업로드 대기
+
+- 빌드 5의 시작 직후 EXC_BAD_ACCESS를 실제 TestFlight 충돌 보고서에서 확인하고 Release 시뮬레이터에서 동일하게 재현했다.
+- 충돌 경로는 React Props → ExpoViewProps → native view 등록. Expo만 소스 빌드해도 실패했고 React Native까지 함께 소스 빌드하면 정상 실행됐다. 정확한 사전 빌드 바이너리 불일치 원인은 확정하지 않았다.
+- iPhone 17 Pro / iOS 26.5 Release에서 홈 유지, 기록·미터기·설정 이동, 기존 기록 4건 유지, 강제 종료 후 재실행 확인. 설정 플러그인 테스트 4개 통과.
+- 수정 커밋: `011b287`. 이후 생성에도 두 소스 빌드 설정을 유지한다.
+- 서명된 Archive `/private/tmp/drive-log-build6.xcarchive` 생성 성공. 앱/위젯 0.1.0 (6), 운행노트 표시 이름, 암호화 면제 설정 및 실제 CarPlay entitlement=true 확인.
+- Mac 잠금으로 Xcode Organizer 최종 업로드를 진행하지 못했다. 빌드 6은 아직 TestFlight에 올라가지 않았다. 잠금 해제 후 업로드 및 내부 테스트 그룹 연결 필요.
+- 실제 iPhone / iOS 27 및 차량 CarPlay 실행은 새 빌드 설치 후 확인해야 한다.
