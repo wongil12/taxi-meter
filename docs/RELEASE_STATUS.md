@@ -74,3 +74,23 @@
 - 기존 `Taxi Meter App Store` 프로파일에 Driving Task entitlement가 없는 것을 확인. Apple Developer 웹 로그인 세션 만료로 앱 ID 권한 활성화 및 프로파일 재발급 대기 중.
 - 새 빌드는 아직 서명·업로드하지 않았다. App Store Connect에서 확인된 기존 빌드는 1뿐이다.
 - 지원·개인정보 HTML은 신규 동작에 맞춰 로컬 문서를 갱신했다. 공개 정책 사이트에는 아직 반영하지 않았다.
+
+## 2026-10-14 운행노트 0.1.0 (5) — 업로드 완료, 처리 중
+
+- 앱 이름을 운행노트로 변경하고 초록색 차량·주행 경로 아이콘 적용. 앱 ID와 기존 설치 데이터 식별자는 유지.
+- Apple Developer에서 기존 App ID의 CarPlay Driving Task App capability 활성화 후 배포 프로파일 재발급 완료.
+- 새 프로파일 UUID `010b31f5-9130-4ee8-bae9-e4208cc3c7af`. 실제 코드 서명에 `com.apple.developer.carplay-driving-task=true` 확인.
+- 앱과 위젯 최종 빌드 번호 5 확인. 정식 서명 Archive: `/private/tmp/drive-log-build5.xcarchive`.
+- Xcode 명령줄 업로드는 `Failed to Use Accounts`로 실패했으나, Xcode Organizer 업로드는 16:52 KST 성공. App Store Connect에서 빌드 5 ‘처리 중’ 확인.
+- 배포 IPA·로그는 `/Users/kim-wongil/Documents/iOS/taxi-meter/releases/0.1.0-5/`에 보관.
+- React, ReactNativeDependencies, hermesvm의 사전 빌드 dSYM 누락 경고가 있으나 앱 업로드 자체는 성공.
+- App Store Connect 이름·부제 및 운행 기록 중심 설명·심사 메모 저장. App Review 제출은 하지 않음.
+- 공개 정책 사이트 원본 폴더 `/Users/kim-wongil/Documents/wongil/app-policy`에 운행노트 목록/안내/개인정보/지원 페이지 추가. 공개 push는 별도 승인 대기.
+
+### 빌드 5 처리 완료
+
+- Apple 처리 완료 후 빌드 5 ‘제출 준비 완료’ 확인. 암호화 문서 누락 없음.
+- 기존 내부 테스트 그룹(테스터 1명)에 빌드 5 연결 완료.
+- 새 이름·아이콘, 운행 기록, CarPlay 실차 확인 항목을 TestFlight 테스트 안내에 저장.
+- 앱 저장소 변경 커밋: `0b8ad30` (이름·아이콘·설명).
+- 사용자 지정 `app-policy` 폴더에 정책/지원/앱 안내와 목록 링크를 커밋(`36457e1`)했으며 공개 게시 승인은 대기 중. 기존 사용자 `.DS_Store` 변경은 보존하고 커밋에서 제외.
