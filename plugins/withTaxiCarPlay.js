@@ -1,4 +1,4 @@
-const { withInfoPlist, withEntitlementsPlist, withAppDelegate, withXcodeProject } = require('expo/config-plugins');
+const { withInfoPlist, withEntitlementsPlist, withAppDelegate, withXcodeProject, withPodfileProperties } = require('expo/config-plugins');
 
 const CARPLAY_ROLE = 'CPTemplateApplicationSceneSessionRoleApplication';
 const PHONE_ROLE = 'UIWindowSceneSessionRoleApplication';
@@ -94,6 +94,14 @@ function configureAppDelegate(source) {
 
 function withTaxiCarPlay(config) {
   const enabled = process.env.TAXI_METER_CARPLAY_ENTITLEMENT === '1';
+  // Build Expo and React Native together to keep native view layouts consistent.
+  // Release startup crashed in ExpoViewProps with prebuilt React Native, even
+  // when Expo alone was built from source. Full source builds pass launch tests.
+  config = withPodfileProperties(config, mod => {
+    mod.modResults.EXPO_USE_PRECOMPILED_MODULES = 'false';
+    mod.modResults['ios.buildReactNativeFromSource'] = 'true';
+    return mod;
+  });
   config = withInfoPlist(config, mod => {
     mod.modResults = configureInfoPlist(mod.modResults, enabled);
     return mod;
