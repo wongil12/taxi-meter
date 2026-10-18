@@ -124,7 +124,7 @@ export default function App() {
   );
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
+      <SafeAreaView edges={['top', 'left', 'right']} style={[styles.safe, { backgroundColor: theme.background }]}>
         <StatusBar style="auto" />
         <NavigationHeader title={screen === 'settings' ? '설정' : screen === 'history' ? '주행 기록' : screen === 'receipt' ? (selectedTrip?.mode === 'log' ? '운행 상세' : '영수증') : screen === 'drive' ? (isLog ? '운행 기록' : '택시 미터기') : '운행노트'}
           backLabel={receiptOrigin === 'history' ? '주행 기록' : receiptOrigin === 'home' ? '운행' : '주행 완료'}
@@ -212,8 +212,10 @@ export default function App() {
           <View style={styles.controlSlot}>{button(meter.status === 'running' ? '일시정지' : '다시 시작', meter.status === 'running' ? pause : () => { void begin(); }, true)}</View>
           <View style={styles.controlSlot}>{button('주행 종료', () => { finish(); setScreen('drive'); })}</View>
         </View>}
+        <SafeAreaView edges={['bottom']} style={{ backgroundColor: theme.surface }}>
         <MainTabs active={screen === 'drive' ? (isLog ? 'home' : 'meter') : screen === 'receipt' ? (receiptOrigin === 'drive' ? (isLog ? 'home' : 'meter') : receiptOrigin) : screen} onSelect={tab => tab === 'meter' ? openMode('taxi') : setScreen(tab)}
           theme={theme} disabled={busy || sharingReceipt} running={meter.status === 'running'} />
+        </SafeAreaView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
