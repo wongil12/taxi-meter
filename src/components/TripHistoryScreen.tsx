@@ -23,8 +23,8 @@ export function TripHistoryScreen({ records, loading, error, reload, remove, the
     <View style={styles.filters}>
       {([['all', '전체'], ['log', '운행 기록'], ['taxi', '택시 미터']] as const).map(([value, label]) =>
         <Pressable key={value} accessibilityRole="button" accessibilityState={{ selected: filter === value }} onPress={() => setFilter(value)}
-          style={[styles.filter, { backgroundColor: filter === value ? theme.accent : 'transparent', borderColor: theme.line }]}>
-          <Text style={[styles.body, { color: filter === value ? theme.onAccent : theme.text }]}>{label}</Text>
+          style={[styles.filter, { backgroundColor: filter === value ? theme.panel : 'transparent', borderColor: theme.line }]}>
+          <Text style={[styles.body, { color: filter === value ? theme.accent : theme.muted }]}>{label}</Text>
         </Pressable>)}
     </View>
     {!loading && !error && <View style={[styles.summary, { backgroundColor: theme.panel }]}>
@@ -115,11 +115,11 @@ function Action({ label, onPress, theme, primary = false, disabled = false }: {
 }
 const styles = StyleSheet.create({
   filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  filter: { minHeight: 48, paddingHorizontal: 16, justifyContent: 'center', borderRadius: 14, borderWidth: 1 },
+  filter: { minHeight: 48, paddingHorizontal: 16, justifyContent: 'center', borderRadius: 12, borderWidth: 0 },
   summary: { gap: 8, padding: 20, borderRadius: 16 },
   heading: { fontSize: 28, fontWeight: '700' }, body: { fontSize: 15, lineHeight: 23 },
-  row: { borderWidth: 1, borderRadius: 16, padding: 18, gap: 8 }, record: { gap: 8, paddingVertical: 8 },
-  total: { fontSize: 26, fontWeight: '600', fontVariant: ['tabular-nums'] },
+  row: { borderWidth: 0, borderRadius: 16, padding: 18, gap: 8 }, record: { gap: 8, paddingVertical: 8 },
+  total: { fontSize: 23, fontWeight: '600', fontVariant: ['tabular-nums'] },
   action: { minHeight: 48, justifyContent: 'center', alignItems: 'center', padding: 12, borderRadius: 14 },
   actionText: { fontSize: 17, fontWeight: '600' },
   receipt: { backgroundColor: '#FFFFFF', padding: 24, gap: 16 },

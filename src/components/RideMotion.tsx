@@ -33,7 +33,7 @@ export function RideMotion({ running, color, surface, line }: {
       toValue: 1, duration: 700, easing: Easing.out(Easing.cubic), useNativeDriver: true,
     });
     const movingRoad = Animated.loop(Animated.timing(road, {
-      toValue: 1, duration: 900, easing: Easing.linear, useNativeDriver: true, isInteraction: false,
+      toValue: 1, duration: 1500, easing: Easing.linear, useNativeDriver: true, isInteraction: false,
     }));
     arrival.start(); movingRoad.start();
     return () => { arrival.stop(); movingRoad.stop(); };
@@ -42,7 +42,7 @@ export function RideMotion({ running, color, surface, line }: {
   return (
     <View style={styles.scene} accessible accessibilityLabel={running ? '자동차 주행 애니메이션' : '정지한 자동차'}>
       <Animated.View style={{ transform: [{ translateX: departure.interpolate({ inputRange: [0, 1], outputRange: [-140, 0] }) }] }}>
-        <Svg width={144} height={76} viewBox="0 0 144 76">
+        <Svg width={112} height={60} viewBox="0 0 144 76">
           <Rect x="63" y="7" width="23" height="10" rx="3" fill={color} />
           <Path d="M19 43 L31 23 Q34 18 43 18 H87 Q95 18 100 26 L110 40 L127 45 Q134 47 134 54 V61 H10 V52 Q10 44 19 43Z" fill={color} />
           <Path d="M39 25 H61 V40 H29Z M68 25 H87 Q90 25 94 31 L100 40 H68Z" fill={surface} />
@@ -62,8 +62,8 @@ export function RideMotion({ running, color, surface, line }: {
   );
 }
 const styles = StyleSheet.create({
-  scene: { height: 120, overflow: 'hidden', alignItems: 'center', justifyContent: 'flex-end' },
-  road: { height: 28, width: '100%', borderTopWidth: 1, marginTop: 5, overflow: 'hidden', justifyContent: 'center' },
+  scene: { height: 84, overflow: 'hidden', alignItems: 'center', justifyContent: 'flex-end' },
+  road: { height: 18, width: '100%', borderTopWidth: 1, marginTop: 5, overflow: 'hidden', justifyContent: 'center' },
   dashes: { flexDirection: 'row', width: 960, gap: 24 },
   dash: { width: 24, height: 2 },
 });

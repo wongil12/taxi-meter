@@ -124,7 +124,7 @@ export default function App() {
   );
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={[styles.safe, { backgroundColor: theme.surface }]}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
         <StatusBar style="auto" />
         <NavigationHeader title={screen === 'settings' ? '설정' : screen === 'history' ? '주행 기록' : screen === 'receipt' ? (selectedTrip?.mode === 'log' ? '운행 상세' : '영수증') : screen === 'drive' ? (isLog ? '운행 기록' : '택시 미터기') : '운행노트'}
           backLabel={receiptOrigin === 'history' ? '주행 기록' : receiptOrigin === 'home' ? '운행' : '주행 완료'}
@@ -156,7 +156,7 @@ export default function App() {
           {!inTrip ? (
             <View style={styles.welcome}>
               {!isLog && <RideMotion running={false} color={theme.accent} surface={theme.background} line={theme.line} />}
-              <Text accessibilityRole="header" style={[styles.title, text]}>{isLog ? '오늘의 운행을 기록하세요' : '택시 미터기'}</Text>
+              {isLog && <Text accessibilityRole="header" style={[styles.title, text]}>오늘의 운행을 기록하세요</Text>}
               <Text style={[styles.notice, { color: theme.muted }]}>{isLog ? 'GPS로 거리와 시간을 측정하고 운행 기록으로 저장합니다. 요금은 계산하지 않습니다.' : '선택한 주행에만 거리와 저속 시간을 합산해 요금을 계산합니다.'}</Text>
               <Text style={[styles.notice, { color: theme.muted }]}>안전 운전 하세요</Text>
             </View>
@@ -180,10 +180,10 @@ export default function App() {
             ))}
           </View>
           </>}
-          <View style={[styles.gps, { backgroundColor: theme.panel }]}>
+          {(inTrip || busy || !['새로운 주행을 시작해 보세요.', '시작하면 위치 접근 권한을 요청합니다.'].includes(gpsMessage)) && <View style={[styles.gps, { backgroundColor: theme.panel }]}>
             {busy && <ActivityIndicator color={theme.accent} />}
             <Text style={[styles.notice, { color: theme.muted, flex: 1 }]}>{gpsMessage}</Text>
-          </View>
+          </View>}
           {!inTrip && isLog && <Text style={[styles.notice, { color: theme.muted }]}>운행 기록은 이 기기에 저장됩니다. CarPlay 연결 없이 앱을 벗어나면 측정을 일시정지합니다. GPS 신호가 불확실한 구간의 거리는 제외합니다.</Text>}
           {carPlay.errorMessage && <Text accessibilityRole="alert" style={[styles.notice, { color: theme.muted }]}>{carPlay.errorMessage}</Text>}
           <View style={styles.actions}>
@@ -222,26 +222,26 @@ const styles = StyleSheet.create({
   safe: { flex: 1 },
   scroller: { flex: 1 },
   scroll: { flexGrow: 1 },
-  pinnedControls: { flexDirection: 'row', gap: 12, paddingHorizontal: 24, paddingTop: 12, paddingBottom: 12, borderTopWidth: 1, width: '100%', maxWidth: 640, alignSelf: 'center', flexShrink: 0 },
+  pinnedControls: { flexDirection: 'row', gap: 12, paddingHorizontal: 24, paddingTop: 12, paddingBottom: 12, borderTopWidth: StyleSheet.hairlineWidth, width: '100%', maxWidth: 640, alignSelf: 'center', flexShrink: 0 },
   controlSlot: { flex: 1 },
-  welcome: { gap: 24, paddingVertical: 12 },
-  content: { flexGrow: 1, padding: 24, gap: 28, maxWidth: 640, width: '100%', alignSelf: 'center' },
+  welcome: { gap: 16, paddingVertical: 4 },
+  content: { flexGrow: 1, padding: 24, gap: 24, maxWidth: 640, width: '100%', alignSelf: 'center' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 },
   title: { fontSize: 28, fontWeight: '700' },
   state: { fontSize: 16 },
-  meter: { padding: 20, gap: 12, borderRadius: 16, borderWidth: 1 },
+  meter: { padding: 20, gap: 12, borderRadius: 16, borderWidth: 0 },
   label: { fontSize: 15 },
-  fare: { fontSize: 56, fontWeight: '700', fontVariant: ['tabular-nums'] },
+  fare: { fontSize: 48, fontWeight: '600', fontVariant: ['tabular-nums'] },
   currency: { fontSize: 24, fontWeight: '500' },
   notice: { fontSize: 15, lineHeight: 23 },
-  readings: { borderWidth: 1, borderRadius: 16, padding: 20, gap: 20 },
+  readings: { borderWidth: 0, borderRadius: 16, padding: 20, gap: 20 },
   reading: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 8 },
   value: { fontSize: 23, fontWeight: '600', fontVariant: ['tabular-nums'] },
   gps: { padding: 16, borderRadius: 12, flexDirection: 'row', gap: 12, minHeight: 48, flexShrink: 1 },
   actions: { gap: 12 },
   button: { minHeight: 56, alignItems: 'center', justifyContent: 'center', padding: 16, borderRadius: 14 },
-  buttonText: { fontSize: 18, fontWeight: '600' },
-  rules: { gap: 12, padding: 20, borderRadius: 16, borderWidth: 1 },
+  buttonText: { fontSize: 17, fontWeight: '600' },
+  rules: { gap: 12, padding: 20, borderRadius: 16, borderWidth: 0 },
   ruleTitle: { fontSize: 17, fontWeight: '600' },
   settings: { minHeight: 48, justifyContent: 'center', alignSelf: 'flex-start' },
   settingsText: { fontSize: 15, textDecorationLine: 'underline' },

@@ -20,7 +20,7 @@
       "refersTo": "button-primary-light",
       "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
       "html": "<button class=\"ds-button-primary-light\">주행 시작</button>",
-      "css": ".ds-button-primary-light {background:#245BDB;color:#FFFFFF;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-light:active {opacity:.7;} .ds-button-primary-light:disabled {opacity:.5;}"
+      "css": ".ds-button-primary-light {background:#416A8D;color:#FFFFFF;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-light:active {opacity:.7;} .ds-button-primary-light:disabled {opacity:.5;}"
     },
     {
       "name": "button-secondary-light",
@@ -28,7 +28,7 @@
       "refersTo": "button-secondary-light",
       "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
       "html": "<button class=\"ds-button-secondary-light\">주행 시작</button>",
-      "css": ".ds-button-secondary-light {background:transparent;color:#202631;border:1px solid #C9D1DD;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-light:active {opacity:.7;} .ds-button-secondary-light:disabled {opacity:.5;}"
+      "css": ".ds-button-secondary-light {background:transparent;color:#2A3035;border:1px solid #DEE2E3;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-light:active {opacity:.7;} .ds-button-secondary-light:disabled {opacity:.5;}"
     },
     {
       "name": "button-primary-dark",
@@ -36,7 +36,7 @@
       "refersTo": "button-primary-dark",
       "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
       "html": "<button class=\"ds-button-primary-dark\">주행 시작</button>",
-      "css": ".ds-button-primary-dark {background:#90B7FF;color:#102342;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-dark:active {opacity:.7;} .ds-button-primary-dark:disabled {opacity:.5;}"
+      "css": ".ds-button-primary-dark {background:#9AB8D0;color:#202A33;border:0;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-primary-dark:active {opacity:.7;} .ds-button-primary-dark:disabled {opacity:.5;}"
     },
     {
       "name": "button-secondary-dark",
@@ -44,7 +44,7 @@
       "refersTo": "button-secondary-dark",
       "description": "현재 React Native 버튼의 정적 HTML 근사. 웹 포커스는 브라우저 기본값이며 실제 네이티브 미리보기가 아니다.",
       "html": "<button class=\"ds-button-secondary-dark\">주행 시작</button>",
-      "css": ".ds-button-secondary-dark {background:transparent;color:#F4F6FA;border:1px solid #435169;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-dark:active {opacity:.7;} .ds-button-secondary-dark:disabled {opacity:.5;}"
+      "css": ".ds-button-secondary-dark {background:transparent;color:#E4E7E9;border:1px solid #373D43;border-radius:14px;padding:16px;min-height:56px;font:600 18px system-ui;} .ds-button-secondary-dark:active {opacity:.7;} .ds-button-secondary-dark:disabled {opacity:.5;}"
     }
   ],
   "narrative": {

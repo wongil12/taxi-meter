@@ -53,7 +53,7 @@ export function DriveHome({ records, loading, error, onStartLog, onOpenTaxi, onO
             <Text style={[styles.link, { color: theme.accent, opacity: disabled ? 0.5 : 1 }]}>기록에서 다시 불러오기</Text>
           </Pressable>
         </View> : <>
-          <View style={[styles.summary, { borderColor: theme.line, backgroundColor: theme.panel }]}>
+          <View style={[styles.summary, { borderColor: theme.line, backgroundColor: theme.surface }]}>
             {[
               ['운행 횟수', `${monthly.length}회`],
               ['이동 거리', distance(totalDistance)],
@@ -77,7 +77,7 @@ export function DriveHome({ records, loading, error, onStartLog, onOpenTaxi, onO
       {recent.length === 0 ? <Text style={[styles.body, { color: theme.muted }]}>아직 저장된 운행이 없어요. 첫 운행을 시작해 보세요.</Text>
         : recent.map(record => <Pressable key={record.id} accessibilityRole="button" disabled={disabled}
           accessibilityState={{ disabled }} accessibilityLabel={`${tripDate(record.endedAt)}, ${distance(record.distanceMeters)}, ${formatDuration(record.durationSeconds)} 운행 기록 보기`}
-          onPress={() => onOpenTrip(record)} style={({ pressed }) => [styles.record, { borderColor: theme.line, backgroundColor: theme.surface, opacity: disabled ? 0.5 : pressed ? 0.7 : 1 }]}>
+          onPress={() => onOpenTrip(record)} style={({ pressed }) => [styles.record, { borderColor: theme.line, backgroundColor: theme.background, opacity: disabled ? 0.5 : pressed ? 0.7 : 1 }]}>
           <View style={styles.recordContent}>
             <Text style={[styles.body, { color: theme.muted }]}>{tripDate(record.endedAt)}</Text>
             <Text style={[styles.recordMetrics, { color: theme.text }]}>{distance(record.distanceMeters)} · {formatDuration(record.durationSeconds)}</Text>
@@ -102,18 +102,18 @@ export function DriveHome({ records, loading, error, onStartLog, onOpenTaxi, onO
 }
 
 const styles = StyleSheet.create({
-  home: { gap: 28 }, intro: { gap: 12 }, heading: { fontSize: 27, fontWeight: '700', lineHeight: 36 },
+  home: { gap: 28 }, intro: { gap: 12 }, heading: { fontSize: 25, fontWeight: '600', lineHeight: 34 },
   body: { fontSize: 15, lineHeight: 23 }, caption: { fontSize: 13, lineHeight: 20 },
   start: { minHeight: 56, padding: 16, marginTop: 8, borderRadius: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   startLabel: { fontSize: 18, fontWeight: '600', flexShrink: 1 },
-  section: { gap: 12 }, sectionTitle: { fontSize: 19, fontWeight: '600', flexShrink: 1 },
+  section: { gap: 12 }, sectionTitle: { fontSize: 18, fontWeight: '600', flexShrink: 1 },
   sectionHeading: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' },
   summary: { borderRadius: 16, padding: 20, gap: 18 },
   summaryRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' },
-  summaryValue: { fontSize: 23, fontWeight: '600', fontVariant: ['tabular-nums'] },
+  summaryValue: { fontSize: 21, fontWeight: '600', fontVariant: ['tabular-nums'] },
   loading: { flexDirection: 'row', alignItems: 'center', gap: 12 }, error: { gap: 8 },
   textAction: { minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' }, link: { fontSize: 15, fontWeight: '600' },
-  record: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 18, borderWidth: 1, borderRadius: 14, minHeight: 76 },
-  recordContent: { flex: 1, gap: 4 }, recordMetrics: { fontSize: 19, fontWeight: '600', lineHeight: 27, fontVariant: ['tabular-nums'] },
-  taxi: { borderWidth: 1, borderRadius: 14, padding: 20, minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  record: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 18, paddingHorizontal: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderRadius: 0, minHeight: 76 },
+  recordContent: { flex: 1, gap: 4 }, recordMetrics: { fontSize: 18, fontWeight: '600', lineHeight: 27, fontVariant: ['tabular-nums'] },
+  taxi: { borderWidth: 0, borderRadius: 14, padding: 20, minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: 12 },
 });

@@ -1,5 +1,5 @@
-/** Shared surfaces for the approved white/charcoal and blue visual direction. */
+/** Quiet neutral surfaces; blue is reserved for actions and selection. */
 export const themes = {
-  light: { background: '#F3F5F8', surface: '#FFFFFF', panel: '#E8EFFB', text: '#202631', muted: '#566174', line: '#C9D1DD', accent: '#245BDB', onAccent: '#FFFFFF' },
-  dark: { background: '#11151C', surface: '#1C2330', panel: '#23334F', text: '#F4F6FA', muted: '#B6C2D4', line: '#435169', accent: '#90B7FF', onAccent: '#102342' },
+  light: { background: '#F5F5F3', surface: '#FFFFFF', panel: '#ECEFEE', text: '#2A3035', muted: '#626B72', line: '#DEE2E3', accent: '#416A8D', onAccent: '#FFFFFF' },
+  dark: { background: '#1B1E21', surface: '#24282C', panel: '#2B3035', text: '#E4E7E9', muted: '#ABB3BA', line: '#373D43', accent: '#9AB8D0', onAccent: '#202A33' },
 };
