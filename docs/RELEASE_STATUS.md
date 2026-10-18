@@ -124,3 +124,14 @@
 - 무서명 시뮬레이터에서는 공유 App Group이 없어 Live Activity가 빈 카드였다. 로컬 ad-hoc 서명 후 App Group 생성과 잠금 화면의 상태·거리·시간 표시 확인. 실차 CarPlay 화면은 미검증.
 - app-policy 개인정보 문구 오타와 Live Activity 요금 설명을 수정하고 로컬 커밋 `44237d6` 생성. 공개 사이트 push는 승인 대기 상태를 유지한다.
 - 이번 변경은 TestFlight 빌드 6에 포함되지 않았다.
+
+## 2026-10-18 TestFlight 빌드 7 준비
+
+- 앱·위젯 0.1.0 (7), CarPlay 활성화 prebuild 및 소스 빌드 설정 적용. prebuild가 iOS 프로젝트를 재생성하여 기존 수동 배포 프로파일을 다시 연결했다.
+- TypeScript 검사, JS 70개와 config plugin 4개 테스트 통과.
+- 서명된 iOS Archive 생성 성공. 실제 서명에서 Driving Task entitlement=true 및 앱/위젯 공유 App Group 확인. 암호화 면제=false 키 값(ITSAppUsesNonExemptEncryption=false) 확인.
+- 보관: `/Users/kim-wongil/Documents/iOS/taxi-meter/releases/0.1.0-7/drive-log.xcarchive` 및 테스트 안내. 원본 `/private/tmp/drive-log-build7.xcarchive`.
+- 동일 CarPlay 활성화 구성의 Release 시뮬레이터 빌드 성공 및 설치/실행 명령 수행. Mac 잠금으로 최종 화면 확인은 미완료. 잠금 해제 후 시작·재실행 화면 확인 필요.
+- 앞선 이번 변경의 로컬 Release에서는 밝은/어두운 앱 화면과 거리·시간 전용 잠금 화면 표시를 확인했다. 최종 활성화 구성의 화면 확인과 구분한다.
+- app-policy 공개 메인과 개인정보 페이지는 `44237d6`까지 게시 확인 완료.
+- 업로드 준비 요청 범위로 진행했으며 빌드 7은 TestFlight에 전송하지 않았다.

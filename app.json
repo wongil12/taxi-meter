@@ -8,7 +8,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.wongil.taximeter",
-      "buildNumber": "6",
+      "buildNumber": "7",
       "appleTeamId": "Y6963W3U5A",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
