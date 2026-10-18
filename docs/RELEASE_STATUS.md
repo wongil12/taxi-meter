@@ -144,3 +144,13 @@
 - IPA와 업로드 로그를 `iOS/taxi-meter/releases/0.1.0-7/`에 추가 보관했다.
 - Apple 처리 완료 후 내부 테스트 그룹(테스터 1명)에 빌드 7을 연결했고, 테스트 안내 문구의 저장 완료를 확인했다. 암호화 문서 누락 없이 제출 준비 완료 상태다.
 - App Store 심사에는 제출하지 않았다. 실제 차량에서 CarPlay 연결 및 잠금 상태 측정은 추가 실기기 확인 대상이다.
+
+## 2026-10-18 TestFlight 빌드 8
+
+- 차분한 색상·간결한 메뉴·하단 안전 영역 채움과 직선 도로 노트 아이콘 반영.
+- TypeScript와 테스트 70개 통과. 앞선 동일 UI의 Release 시뮬레이터 검수 완료.
+- 앱/위젯 0.1.0 (8), 실제 배포 서명에서 CarPlay Driving Task와 공유 App Group 확인. 배포 앱의 아이콘 이미지를 추출해 직선 도로 자산 포함 확인.
+- Xcode에서 2026-10-18 20:23 KST Uploaded to Apple 확인. Hermes dSYM 누락 경고는 남아 있으나 업로드 성공.
+- Archive, IPA, 테스트 안내, 업로드 로그를 `/Users/kim-wongil/Documents/iOS/taxi-meter/releases/0.1.0-8/`에 보관.
+- Apple 빌드 ID: `2eb72269-4a66-4346-a076-273f5b4d9715`.
+- Apple 처리 완료(제출 준비 완료), 내부 테스트 그룹의 테스터 1명에 연결했다. 변경 사항 안내도 등록했다. App Store 심사에는 제출하지 않았다.
