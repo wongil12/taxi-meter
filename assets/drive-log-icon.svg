@@ -2,6 +2,6 @@
 <rect width="1024" height="1024" fill="#416A8D"/>
 <rect x="250" y="176" width="524" height="672" rx="84" fill="#F5F5F3"/>
 <path d="M350 176v672" stroke="#D5DFE5" stroke-width="20"/>
-<path d="M452 710V580c0-55 47-84 96-111s94-56 94-111v-66" fill="none" stroke="#416A8D" stroke-width="72" stroke-linecap="round"/>
-<path d="M452 697v-38m10-98 24-28m81-55 31-25m41-83v-35" fill="none" stroke="#F5F5F3" stroke-width="12" stroke-linecap="round"/>
+<path d="M488 284h112l104 456H384Z" fill="#416A8D"/>
+<path d="M539 314h10l3 64h-16Z M534 420h20l4 82h-28Z M527 554h34l5 120h-44Z" fill="#F5F5F3"/>
 </svg>
