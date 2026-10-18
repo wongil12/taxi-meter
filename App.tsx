@@ -16,10 +16,8 @@ import { MainTabs, NavigationHeader } from './src/components/AppNavigation';
 import { RideMotion, useReducedMotion } from './src/components/RideMotion';
 import { importNativeTrips } from './src/carplay/nativeMeter';
 
-const themes = {
-  dark: { background: '#101510', surface: '#202A20', panel: '#293829', text: '#F5F5E9', muted: '#B7C0B6', line: '#495C49', accent: '#E4F28B', onAccent: '#19210D' },
-  light: { background: '#EDF1E9', surface: '#FFFFFF', panel: '#DFE8D7', text: '#192119', muted: '#52604F', line: '#BBC8B3', accent: '#344E25', onAccent: '#FFFFFF' },
-};
+import { themes } from './src/theme';
+
 const labels = { idle: '출발 준비', running: '주행 중', paused: '일시정지', finished: '주행 완료' };
 
 export default function App() {
@@ -126,13 +124,13 @@ export default function App() {
   );
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: theme.surface }]}>
         <StatusBar style="auto" />
         <NavigationHeader title={screen === 'settings' ? '설정' : screen === 'history' ? '주행 기록' : screen === 'receipt' ? (selectedTrip?.mode === 'log' ? '운행 상세' : '영수증') : screen === 'drive' ? (isLog ? '운행 기록' : '택시 미터기') : '운행노트'}
           backLabel={receiptOrigin === 'history' ? '주행 기록' : receiptOrigin === 'home' ? '운행' : '주행 완료'}
           onBack={screen === 'receipt' ? () => setScreen(receiptOrigin) : undefined}
           disabled={sharingReceipt} theme={theme} />
-        <ScrollView ref={scroll} style={styles.scroller} contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets scrollEventThrottle={100}
+        <ScrollView ref={scroll} style={[styles.scroller, { backgroundColor: theme.background }]} contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets scrollEventThrottle={100}
           onScroll={event => { if (screen === 'history') scrollPositions.current.history = event.nativeEvent.contentOffset.y; }}>
           <Animated.View style={[styles.content, { opacity: transition, transform: [{ translateX: transition.interpolate({ inputRange: [0, 1], outputRange: [24, 0] }) }] }]} >
           {screen === 'home' ? <>

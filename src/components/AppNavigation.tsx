@@ -43,7 +43,7 @@ export function MainTabs({ active, onSelect, theme, disabled, running }: {
   </View>;
 }
 const styles = StyleSheet.create({
-  header: { paddingHorizontal: 24, paddingTop: 4, paddingBottom: 12, borderBottomWidth: 1, gap: 4 },
+  header: { paddingHorizontal: 24, paddingTop: 12, paddingBottom: 16, borderBottomWidth: 1, gap: 4 },
   title: { fontSize: 26, fontWeight: '700' },
   back: { flexDirection: 'row', alignItems: 'center', minHeight: 44, gap: 4, alignSelf: 'flex-start' },
   backText: { fontSize: 16 },
