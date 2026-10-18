@@ -11,23 +11,23 @@ export function createTaxiMeterActivity() {
       banner: (
         <VStack modifiers={[padding({ all: 16 })]}>
           <Text modifiers={[font({ size: 14 })]}>{props.status}</Text>
-          <Text modifiers={[font({ size: 32, weight: 'bold' })]}>{props.fare}</Text>
-          <Text>{props.distance} · {props.duration}</Text>
-          <Text modifiers={[font({ size: 12 })]}>안전 운전 하세요</Text>
+          <Text modifiers={[font({ size: 32, weight: 'bold' })]}>{props.distance}</Text>
+          <Text>{props.duration}</Text>
         </VStack>
       ),
       bannerSmall: (
         <VStack modifiers={[padding({ all: 8 })]}>
           <Text modifiers={[font({ size: 13 })]}>{props.status}</Text>
-          <Text modifiers={[font({ size: 24, weight: 'bold' })]}>{props.fare}</Text>
+          <Text modifiers={[font({ size: 24, weight: 'bold' })]}>{props.distance}</Text>
+          <Text modifiers={[font({ size: 16 })]}>{props.duration}</Text>
         </VStack>
       ),
-      compactLeading: <Text>운행</Text>,
-      compactTrailing: <Text>{props.fare}</Text>,
-      minimal: <Text>운행</Text>,
+      compactLeading: <Text>{props.duration}</Text>,
+      compactTrailing: <Text>{props.distance}</Text>,
+      minimal: <Text>{props.duration}</Text>,
       expandedLeading: <Text>{props.status}</Text>,
-      expandedTrailing: <Text>{props.fare}</Text>,
-      expandedBottom: <Text>{props.distance} · {props.duration}</Text>,
+      expandedTrailing: <Text>{props.distance}</Text>,
+      expandedBottom: <Text>{props.duration}</Text>,
     };
   });
 }

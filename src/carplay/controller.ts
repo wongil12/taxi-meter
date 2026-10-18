@@ -8,7 +8,6 @@ export interface MeterActivityInput {
   elapsedSeconds: number;
 }
 export interface MeterActivityProps {
-  fare: string;
   distance: string;
   duration: string;
   status: string;
@@ -27,10 +26,9 @@ export interface ActivityResult { status: ActivityStatus; errorMessage?: string 
 export function activityProps(input: MeterActivityInput, foreground: boolean): MeterActivityProps {
   const minutes = Math.floor(input.elapsedSeconds / 60);
   return {
-    fare: input.mode === 'log' ? `${(input.distanceMeters / 1000).toFixed(1)} km` : `${Math.round(input.fare).toLocaleString('ko-KR')}원`,
     distance: `${(input.distanceMeters / 1000).toFixed(1)} km`,
     duration: `${minutes}분`,
-    status: `${input.status === 'running' && foreground ? '주행 중' : '일시정지'} · ${input.mode === 'log' ? '운행 기록' : '요금'}`,
+    status: `${input.status === 'running' && foreground ? '주행 중' : '일시정지'} · ${input.mode === 'log' ? '운행 기록' : '미터기'}`,
   };
 }
 

@@ -22,7 +22,7 @@ test('cleans up old activities before starting and ends on finish', async () => 
   const controller = createActivityController(f.factory, () => {});
   await controller.sync(running, true, true);
   await controller.sync({ ...running, status: 'finished' }, true, true);
-  assert.deepEqual(f.calls, ['old:end', 'start:주행 중 · 요금', 'end']);
+  assert.deepEqual(f.calls, ['old:end', 'start:주행 중 · 미터기', 'end']);
 });
 
 test('background and paused trips never create activities', async () => {
@@ -42,7 +42,7 @@ test('background transitions publish pause; identical seconds do not update', as
   await controller.sync(running, true, false);
   await controller.sync(running, true, true);
   await controller.dispose();
-  assert.deepEqual(f.calls, ['start:주행 중 · 요금', 'update:일시정지 · 요금', 'update:주행 중 · 요금', 'end']);
+  assert.deepEqual(f.calls, ['start:주행 중 · 미터기', 'update:일시정지 · 미터기', 'update:주행 중 · 미터기', 'end']);
 });
 
 test('finish supersedes a queued start during startup cleanup', async () => {
@@ -63,7 +63,7 @@ test('end waits for pending native update and does not overlap it', async () => 
   f.handle.update = () => new Promise<void>(resolve => { f.calls.push('update:pending'); release = resolve; });
   const controller = createActivityController(f.factory, () => {});
   await controller.sync(running, true, true);
-  const update = controller.sync({ ...running, fare: 4900 }, true, true);
+  const update = controller.sync({ ...running, fare: 4900, distanceMeters: 150 }, true, true);
   await Promise.resolve();
   await Promise.resolve();
   const end = controller.sync(running, false, true);
@@ -85,7 +85,7 @@ test('native errors are reported without rejecting and allow later cleanup', asy
 
 test('formatted props contain static duration instead of a running timer', () => {
   assert.deepEqual(activityProps({ ...running, elapsedSeconds: 125, distanceMeters: 1520 }, false), {
-    fare: '4,800원', distance: '1.5 km', duration: '2분', status: '일시정지 · 요금',
+    distance: '1.5 km', duration: '2분', status: '일시정지 · 미터기',
   });
 });
 
@@ -114,7 +114,7 @@ test('failed update is suppressed until lifecycle change and disabled cleanup st
   f.handle.update = async () => { attempts++; throw new Error('update failed'); };
   const controller = createActivityController(f.factory, () => {});
   await controller.sync(running, true, true);
-  await controller.sync({ ...running, fare: 4900 }, true, true);
+  await controller.sync({ ...running, fare: 4900, distanceMeters: 150 }, true, true);
   await controller.sync({ ...running, fare: 5000, elapsedSeconds: 60 }, true, true);
   assert.equal(attempts, 1);
   await controller.sync({ ...running, status: 'paused' }, true, true);
@@ -146,13 +146,25 @@ test('connected CarPlay does not start ActivityKit from background', async () =>
   await controller.sync(running, true, false, true);
   assert.deepEqual(f.calls, []);
   await controller.sync(running, true, true, true);
-  await controller.sync({ ...running, fare: 4900 }, true, false, true);
-  assert.deepEqual(f.calls, ['start:주행 중 · 요금', 'update:주행 중 · 요금']);
+  await controller.sync({ ...running, fare: 4900, distanceMeters: 150 }, true, false, true);
+  assert.deepEqual(f.calls, ['start:주행 중 · 미터기', 'update:주행 중 · 미터기']);
 });
 
 test('ordinary driving activity displays distance without taxi fare', () => {
   const props = activityProps({ ...running, mode: 'log', fare: 4800, distanceMeters: 1234 }, true);
-  assert.equal(props.fare, '1.2 km');
+  assert.equal(props.distance, '1.2 km');
+  assert.equal('fare' in props, false);
   assert.equal(props.status, '주행 중 · 운행 기록');
   assert.equal(JSON.stringify(props).includes('원'), false);
+});
+
+test('taxi activity never exposes fare and ignores fare-only changes', async () => {
+  const props = activityProps({ ...running, mode: 'taxi', fare: 987654, distanceMeters: 2500, elapsedSeconds: 3600 }, true);
+  assert.deepEqual(props, { distance: '2.5 km', duration: '60분', status: '주행 중 · 미터기' });
+  assert.equal(JSON.stringify(props).includes('987654'), false);
+  const f = fixture();
+  const controller = createActivityController(f.factory, () => {});
+  await controller.sync(running, true, true);
+  await controller.sync({ ...running, fare: 9999 }, true, true);
+  assert.deepEqual(f.calls, ['start:주행 중 · 미터기']);
 });
